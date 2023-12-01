@@ -1,0 +1,83 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Practice Prompt Engineering";
+}
+
+<style>
+    .grid-container {
+        display: grid;
+        gap: 50px;
+        grid-auto-columns: 1fr;
+        grid-auto-flow: column;
+        grid-column-gap: 10px;
+    }
+
+    .bottom-row {
+        float: right;
+    }
+
+    .right {
+        display: flex;
+        justify-content: flex-end;
+        margin-left: auto;
+        margin-right: 0;
+    }
+
+    .images {
+        display: grid;
+        gap: 10px;
+        grid-template-columns: auto auto;
+        grid-template-rows: auto auto;
+    }
+
+    input {
+        margin: 7px;
+        padding: 2px;
+    }
+
+
+    button {
+        margin: 5px;
+        padding: 5px;
+    }
+    
+</style>
+
+
+<div class="text-center">
+    <h1 class="display-4">Practice Prompt Engineering</h1>
+    <p>Guess the prompt that generated the image on the left.  Feel free to try multiple times, and see how close you can get to creating a similar image.  When you give up, click "Reveal Prompt" to see the original prompt.</p>
+    <br/>
+    <br/>
+</div>
+
+<div class="grid-container">
+    <div class="item1">
+        <form method="post">
+            <img id="imgOriginal" src="@ViewData["imageOriginal"]" alt="" width="512" height="512" />
+            <p id="txtHiddenPrompt"><b>@ViewData["hiddenPrompt"]</b></p>
+            <br/>
+            <p>When you have created an image similar to the above (it will never be exact) or if you give up and want to see the original prompt that created this image:</p>
+            <input id="btnRevealPrompt" type="submit" value="Reveal Prompt" asp-page-handler="Reveal" />
+        </form>
+    </div>
+
+    <div class="item2">
+        <form method="post">
+            <p>Guess the prompt:</p>
+            <input asp-for="txtInput" id="txtInput" type="text" value="" autofocus="true" size="50" />
+            <input id="btnGuess" type="submit" value="Guess" asp-page-handler="Guess"  />
+            <br/>
+            <div class="images">
+                <img id="imgGuess" src=@ViewData["imageGuess"] alt="" width="512" height="512" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="bottom-row">
+    <form method="post">
+        <input id="btnNext" type="submit" value="Next" asp-page-handler="Next" />
+    </form>
+</div>
